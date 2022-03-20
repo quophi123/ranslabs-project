@@ -42,7 +42,7 @@ if menu == 'Home':
 
 
     if activity == 'EDA':
-        menu = ['view data','size','shape','describe','mean','std','null']
+        menu = ['view data','size','shape','describe','mean','std','null', "count null"]
         option = st.selectbox('Select EDA to perform',menu,help='select type of eda')
         try:
             eda = EploratoryDataAnalysis()
