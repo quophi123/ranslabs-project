@@ -35,11 +35,14 @@ class EploratoryDataAnalysis:
             data = data.shape
             #st.write('dataset has {} columns and {} rows'.format(data.shape[0],data.shape[1]))
         elif option == 'mean':
+        
             data = data.mean()
         elif option == 'std':
             data = data.std()
         elif option == 'null':
             data = data.isnull()
+        elif option =='count null':
+            data = data.isnull().sum()
         else:
             return st.write(option)
         return st.write(data)
