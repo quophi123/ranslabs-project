@@ -1,3 +1,4 @@
+from re import A
 from warnings import catch_warnings
 from pandas.core.indexes.base import Index
 import streamlit as st 
@@ -42,10 +43,18 @@ if menu == 'Home':
 
 
     if activity == 'EDA':
-        menu = ['view data','size','shape','describe','mean','std','null', "count null"]
-        option = st.selectbox('Select EDA to perform',menu,help='select type of eda')
+        menu = ['view data','size','shape','show columns','describe','mean','std','null', "count null","corr"]
+        #option = st.selectbox('Select EDA to perform',menu,help='select type of eda')
+    
+        with st.form('eda form'):
+            
+            option = st.radio('selects',menu)
+
+            st.form_submit_button()
+      
         try:
             eda = EploratoryDataAnalysis()
+           # with option:
             eda.analyze_data(option,df)
         except:
             st.info('no data uploaded')
