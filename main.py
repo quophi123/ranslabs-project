@@ -78,7 +78,7 @@ if menu == 'Home':
 
     elif activity == 'Model Building':
         bm = Buildmodel()
-        st.write(bm.build())
+        bm.build()
 
 
 
