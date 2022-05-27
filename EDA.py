@@ -2,6 +2,7 @@ from pandas import options
 import streamlit as st
 import pandas as pd
 import numpy as np
+from FileUpload import app as fileupload
 
 
 
@@ -9,10 +10,12 @@ import numpy as np
 
 
 
+def app():
+    data=fileupload()
+    try:
+        menu = ['view data','size','shape','show columns','describe','mean','std','null', "count null","corr"]
+        option = st.selectbox('Select EDA to perform',menu,help='select type of eda')
 
-class EploratoryDataAnalysis:
-
-    def analyze_data(self,option,data=None):
         if  option == 'view data':
             view_type = st.selectbox('select view type',('by rows','by columns'))
             if view_type == 'by rows':
@@ -64,6 +67,8 @@ class EploratoryDataAnalysis:
         else:
             return st.write(option)
         return st.write(data)
+    except:
+        st.error("No Data Uploaded")
 
-    
+        
 

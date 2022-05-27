@@ -2,9 +2,5 @@ import streamlit as st
 
 
 
-class Makeprediction:
-    
-    
-    def predict(self):
-        
-        return 'predict here'
+def app():
+    return st.subheader('predict here')
