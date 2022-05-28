@@ -91,7 +91,7 @@ def kNearestNeibhor():
 def app():
 
     # SVC parameters function
-    menu = st.sidebar.selectbox("MENU",("supportVectorMachine","randomForest","decisionTree","kNearestNeibhor"))
+    menu = st.selectbox("",("supportVectorMachine","randomForest","decisionTree","kNearestNeibhor"))
     if menu == "supportVectorMachine":
         supportVectorMachine()
         

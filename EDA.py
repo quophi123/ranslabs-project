@@ -2,7 +2,7 @@ from pandas import options
 import streamlit as st
 import pandas as pd
 import numpy as np
-from FileUpload import app as fileupload
+from FileUpload import app as file
 
 
 
@@ -11,7 +11,7 @@ from FileUpload import app as fileupload
 
 
 def app():
-    data=fileupload()
+    data= file()
     try:
         menu = ['view data','size','shape','show columns','describe','mean','std','null', "count null","corr"]
         option = st.selectbox('Select EDA to perform',menu,help='select type of eda')
@@ -69,6 +69,8 @@ def app():
         return st.write(data)
     except:
         st.error("No Data Uploaded")
+
+
 
         
 
