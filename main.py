@@ -5,7 +5,7 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 #import Modelbuilding,EDA,Prediction,FileUpload,Home,Visualize
-from streamlit_option_menu import option_menu
+#from streamlit_option_menu import option_menu
 
 
 #site configurations 

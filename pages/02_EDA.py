@@ -19,70 +19,74 @@ hid_menu_style = """
 st.markdown(hid_menu_style,unsafe_allow_html=True)
 
 
- 
 
-def app():
-    #data = FileUpload.data1   
-    try:
-        menu = ['view data','size','shape','show columns','describe','mean','std','null', "count null","corr"]
-        option = st.selectbox('Select EDA to perform',menu,help='select type of eda')
 
-        if  option == 'view data':
-            view_type = st.selectbox('select view type',('by rows','by columns'))
-            if view_type == 'by rows':
-                view_option = st.radio('select view type',('head','tail','preferred number'))
-                if view_option == 'head':
-                    data = data.head()
-                elif view_option == 'tail':
-                    data = data.tail()
-                else:
-                    number = st.slider('slide to your preferred number',min_value=1,max_value=data.shape[0])
-                    data = data.head(number)
+# uploading your dataset
+def file():
+    k =['csv','xlsx']
+    data = st.file_uploader('Upload file here',type=k)
+    #data = pd.to_csv(data)
+    if data is not None:
+        df = pd.read_csv(data)
+    else:
+        df = st.warning("Upload Data")
+    return df
+
+
+
+data = file()
+try:
+    menu = ['view data','size','shape','show columns','describe','mean','std','null', "count null","corr"]
+    option = st.selectbox('Select EDA to perform',menu,help='select type of eda')
+
+    if  option == 'view data':
+        view_type = st.selectbox('select view type',('by rows','by columns'))
+        if view_type == 'by rows':
+            view_option = st.radio('select view type',('head','tail','preferred number'))
+            if view_option == 'head':
+                st.dataframe(data.head())
+            elif view_option == 'tail':
+                st.dataframe(data.tail())
             else:
-                column_view = st.multiselect('showing data by columns',data.columns)
-                data = data[column_view]
-
-        elif option == 'size':
-            data = data.size
-
-        elif option == 'show columns':
-            data = data.columns 
-
-        elif option == 'describe':
-            data = data.describe()
-
-        elif option == 'shape':
-            data = data.shape
-            #st.write('dataset has {} columns and {} rows'.format(data.shape[0],data.shape[1]))
-
-        elif option == 'mean':
-            # calculating for mean of the dataset
-            data = data.mean()
-        elif option == 'std':
-            #claculating the standard deviation
-            data = data.std()
-        elif option == 'null':
-            data = data.isnull()
-
-        elif option =='count null':
-            data = data.isnull().sum()
-
-        elif option =='corr':
-            # checking for correlation between columns of the data set
-
-            col1 = st.sidebar.selectbox('select first column',data.columns)
-            col2 = st.sidebar.selectbox('select second column',data.columns)
-            a = data[f"{col1}"]
-            b = data[f'{col2}']
-            data = a.corr(b)
+                number = st.slider('slide to your preferred number',min_value=1,max_value=data.shape[0])
+                st.dataframe(data.head(number))
         else:
-            return st.write(option)
-        return st.write(data)
-    except:
-        st.error("No Data Uploaded")
+            column_view = st.multiselect('showing data by columns',data.columns)
+            st.dataframe(data[column_view])
 
+    elif option == 'size':
+        st.write(data.size)
 
+    elif option == 'show columns':
+        st.dataframe(data.columns )
 
-        
+    elif option == 'describe':
+       st.dataframe(data.describe())
 
-app()
+    elif option == 'shape':
+        st.write('dataset has `{}` columns and `{}` rows'.format(data.shape[0],data.shape[1]))
+
+    elif option == 'mean':
+        # calculating for mean of the dataset
+        st.dataframe(data.mean())
+    elif option == 'std':
+        #claculating the standard deviation
+        st.dataframe(data.std())
+    elif option == 'null':
+        st.write(data.isnull())
+
+    elif option =='count null':
+        st.dataframe(data.isnull().sum())
+
+    elif option =='corr':
+        # checking for correlation between columns of the data set
+
+        col1 = st.sidebar.selectbox('select first column',data.columns)
+        col2 = st.sidebar.selectbox('select second column',data.columns)
+        a = data[f"{col1}"]
+        b = data[f'{col2}']
+        st.write(a.corr(b))
+    else:
+        st.write(option)
+except:
+    st.error("No Data Uploaded")
