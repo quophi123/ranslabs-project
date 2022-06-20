@@ -1,16 +1,19 @@
 import streamlit as st
+from PIL import Image
 
 
 
 
 def Config():
-    st.set_page_config(layout="wide")
+    logo = Image.open('assets/logo.jpg')
+    st.set_page_config(page_title="ml automate", page_icon=logo, layout="wide", initial_sidebar_state="collapsed")
     hide_menu_style = """
             <style>
             #MainMenu {visibility: hidden;}
             .css-1k0ckh2{display:none}
             .css-9s5bis{display:none}
             .css-k0sv6k{display:none}
+            footer{visibility:hidden}
             </style>
             """
     st.markdown(hide_menu_style, unsafe_allow_html=True)
