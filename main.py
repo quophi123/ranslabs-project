@@ -4,7 +4,8 @@ from warnings import catch_warnings
 from pandas.core.indexes.base import Index
 import streamlit as st 
 import pandas as pd
-import Modelbuilding,EDA,Prediction,FileUpload,Home,Visualize
+from PIL import Image
+#import Modelbuilding,EDA,Prediction,FileUpload,Home,Visualize
 from streamlit_option_menu import option_menu
 import streamlit.components.v1 as components  # Import Streamlit
 
