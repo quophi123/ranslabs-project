@@ -15,27 +15,59 @@ hid_menu_style = """
 """
 st.markdown(hid_menu_style,unsafe_allow_html=True)
 
+visuals = ['Pie Chart','Bar Chart','Line Chart','Heat Map']
+
+plot = st.radio('Select Graph Type',visuals,horizontal=True)
 
 
-def app():
-    chart_data = pd.DataFrame(
-     np.random.randn(50, 3),
-     columns=["a", "b", "c"])
-    st.bar_chart(chart_data)
+def file():
+    k =['csv','xlsx']
+    data = st.file_uploader('Upload file here',type=k)
+    #data = pd.to_csv(data)
+    if data is not None:
+        df = pd.read_csv(data)
+    else:
+        df = st.warning("Upload Data")
+    return df
 
-    chart_data = pd.DataFrame(
-     np.random.randn(20, 3),
-     columns=['a', 'b', 'c'])
-    st.area_chart(chart_data)
 
 
+
+data = file()
+if plot == "Pie Chart":
+    st.subheader('Showing graph for pie chart')
+    columns = st.multiselect("Select columns to plot",data.columns.astype(float))
+    if st.button(f'Generate {plot}'):
+        st.plotly_chart(data=data)
+        st.write("plots")
+        
+
+
+
+elif plot == "Bar Chart":
+    st.subheader('Showing graph for bar chart')
+    columns = st.multiselect("Select columns to plot",data.columns)
+    if st.button(f'Generate {plot}'):
+        st.write(data[columns])
+        graph = st.bar_chart(data=data[columns])
+        st.write("plots")
+
+
+
+elif plot == "Line Chart":
+    st.subheader('Showing graph for line chart')
+    columns = st.multiselect("Select columns to plot",data.columns)
+    if st.button(f'Generate {plot}'):
+        st.line_chart(data=data[columns])
+        st.write("plots")
+        
+
+
+
+elif plot == "Heat Map":
+    st.subheader('Showing graph for heat map')
+    if st.button(f'Generate {plot}'):
+        st.graphviz_chart()
+        st.write("plots")
+        
     
-    df = pd.DataFrame(
-        np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
-        columns=['lat', 'lon'])
-
-    st.map(df)
-
-
-
-app()

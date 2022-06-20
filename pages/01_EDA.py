@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from PIL import Image
+from functions import buildInterractiveTable
 #from pages import FileUpload 
 
 
@@ -35,8 +36,14 @@ def file():
 
 
 data = file()
+
+buildInterractiveTable(data)
+
+
+
+
 try:
-    menu = ['view data','size','shape','show columns','describe','mean','std','null', "count null","corr"]
+    menu = ['view data','size','shape','Check Datatypes','show columns','describe','mean','std','null', "count null","corr"]
     option = st.selectbox('Select EDA to perform',menu,help='select type of eda')
 
     if  option == 'view data':
@@ -68,25 +75,35 @@ try:
 
     elif option == 'mean':
         # calculating for mean of the dataset
-        st.dataframe(data.mean())
+        st.write(data.mean())
+    elif option == 'Check Datatypes':
+        try:
+            st.write(data.dtypes())
+        except:
+            st.warning('Check your data well')
     elif option == 'std':
         #claculating the standard deviation
+        st.write("Showing `standard deviation` of various columns")
         st.dataframe(data.std())
     elif option == 'null':
+        st.write("Showing Entries with no value where `marked` means true and `unmarked` means false")
         st.write(data.isnull())
 
     elif option =='count null':
+        st.write("Showing `number` of null value in each columns")
         st.dataframe(data.isnull().sum())
 
     elif option =='corr':
         # checking for correlation between columns of the data set
-
-        col1 = st.sidebar.selectbox('select first column',data.columns)
-        col2 = st.sidebar.selectbox('select second column',data.columns)
-        a = data[f"{col1}"]
-        b = data[f'{col2}']
-        st.write(a.corr(b))
+        try:
+            col1 = st.sidebar.selectbox('select first column',data.columns)
+            col2 = st.sidebar.selectbox('select second column',data.columns)
+            a = data[f"{col1}"]
+            b = data[f'{col2}']
+            st.write(a.corr(b))
+        except:
+            st.write("`No Correlation for the selected columns`")
     else:
-        st.write(option)
+        st.write(data)
 except:
     st.error("No Data Uploaded")
