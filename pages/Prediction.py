@@ -8,4 +8,4 @@ Config()
 
 Navbar()
 
-st.markdown('Prediction Area')
+st.markdown("""<h1> Prediction  Area </h1>""", unsafe_allow_html=True)

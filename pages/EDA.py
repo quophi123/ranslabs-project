@@ -7,5 +7,4 @@ from Components.Config import Config;
 
 Config()
 Navbar()
-
-st.header('EDA Area')
+st.markdown("""<h1> EDA Area </h1>""", unsafe_allow_html=True)

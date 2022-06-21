@@ -7,9 +7,4 @@ from Components.Config import Config;
 Config()
 
 Navbar()
-st.header('Visualization Area')
-
-
-st.button('click me')
-
-st.multiselect('Choose an option',('main','home','school'))
+st.markdown("""<h1> Data Visualization Area </h1>""", unsafe_allow_html=True)
