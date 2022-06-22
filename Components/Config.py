@@ -14,7 +14,7 @@ def Config():
             .css-9s5bis{display:none}
             .css-k0sv6k{display:none}
             .css-hy8qiv {display:none}
-             
+            
             footer{visibility:hidden}
             </style>
             """
