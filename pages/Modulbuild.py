@@ -28,18 +28,10 @@ Config()
 Navbar()
 st.markdown("""<h1> Model Building Area </h1>""", unsafe_allow_html=True)
 
-@st.cache(suppress_st_warning=True)
-def file():
-    k =['csv','xlsx']
-    data = st.file_uploader('Upload file here',type=k)
-    #data = pd.to_csv(data)
-    if data is not None:
-        df = pd.read_csv(data)
-    return df
-
 try:
-    data = file()
-
+    
+    data = pd.read_csv('newfile.csv')
+    columns = data.columns
 
 
 
@@ -151,6 +143,12 @@ try:
     with st.expander("Select Your Features and Labels"):
         features_columns = st.multiselect("Select your festures for the model",data.columns,help='Select the columns you want to use as features')
         labels_columns = st.selectbox("Select your labels for the model",data.columns,help='Select the columns you want to use as labels')
+    
+    def saveColumns():
+        return features_columns
+
+    
+
 
     features = data[features_columns]
     labels = data[labels_columns]

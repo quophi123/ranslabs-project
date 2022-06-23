@@ -53,7 +53,7 @@ st_lottie(
 
 
 # uploading your dataset
-@st.cache(suppress_st_warning=True)
+
 def file():
     k =['csv','xlsx']
     data = st.file_uploader('Upload file here',type=k)

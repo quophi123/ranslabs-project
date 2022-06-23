@@ -1,6 +1,8 @@
 import pandas as pd
 from this import d
 import streamlit as st
+from csv import DictReader
+import os.path
 
 #import app components
 from Components.Navbar import Navbar;
@@ -11,7 +13,36 @@ Config()
 Navbar()
 st.markdown("""<h1> EDA Area </h1>""", unsafe_allow_html=True)
 
+
+
+
+
+
+#saving the csv file in directory
+def saveFile(data):
+    directory='C:/Users/quophi/Desktop/Main Folder/Projects/final project/ranslabs-project/'
+    file_name = 'newfile'
+    g = directory + file_name
+    output=data 
+    if st.button("Submit"):
+        try:
+            # line = [line for line in open(path)]
+            output.to_csv(os.path.join(f'{g}.csv'),index=False,encoding='utf8')
+            st.success('Saved Successfully')
+        except Exception as e:
+            st.write(e)
+
+
+
+
+
+
+
+
+
+
 # uploading your dataset
+#@st.cache(suppress_st_warning=True)
 def file():
     k =['csv','xlsx']
     data = st.file_uploader('Upload file here',type=k)
@@ -23,9 +54,11 @@ def file():
     return df
 
 
-
 data = file()
+if st.checkbox('Submit for visualization'):
+    saveFile(data)
 buildInterractiveTable(data)
+
 
 
 
@@ -96,3 +129,5 @@ try:
         st.write(data)
 except:
     st.error("No Data Uploaded")
+
+
