@@ -2,7 +2,8 @@ import pandas as pd
 from this import d
 import streamlit as st
 from csv import DictReader
-import os.path
+import os
+import sys
 
 #import app components
 from Components.Navbar import Navbar;
@@ -20,9 +21,18 @@ st.markdown("""<h1> EDA Area </h1>""", unsafe_allow_html=True)
 
 #saving the csv file in directory
 def saveFile(data):
-    directory='C:/Users/quophi/Desktop/Main Folder/Projects/final project/ranslabs-project/'
+    
+    directory=os.getcwd()
     file_name = 'newfile'
-    g = directory + file_name
+    s = None
+    platform = sys.platform.startswith('win')
+    if platform == True:
+        s="\\"
+    else:
+        s="/"
+        
+    g = directory +  s + file_name
+    st.write(g)
     output=data 
     if st.button("Submit"):
         try:
