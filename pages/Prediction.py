@@ -3,9 +3,12 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle as pk
+import os
+import sys
 #import app components
 from Components.Navbar import Navbar;
 from Components.Config import Config;
+
 
 
 
@@ -15,18 +18,42 @@ Navbar()
 
 st.markdown("""<h1> Prediction  Area </h1>""", unsafe_allow_html=True)
 
-filename = 'sepal_length-sepal_width-petal_length-petal_width-.sav'
-name = filename.split('-')
 
+
+available_models = []
+g = os.getcwd()
+for i in os.listdir(g):
+    if i.endswith('.sav'):
+        available_models.append(i)
+        
+    
+
+
+
+
+v = st.selectbox('Select your model',available_models)
+
+
+
+
+directory= os.getcwd()
+file_name = 'newfile'
+s = None
+platform = sys.platform.startswith('win')
+if platform == True:
+    s="\\"
+else:
+    s="/"
+filename = v
+
+name = filename.split('.')
+name.pop(0)
 
 
 def uploadModel():
     # load the model from disk
     loaded_model = pk.load(open(filename, 'rb'))
     return loaded_model
-
-
-
 
 
 

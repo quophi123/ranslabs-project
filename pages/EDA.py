@@ -67,7 +67,7 @@ def file():
 data = file()
 if st.checkbox('Submit for visualization'):
     saveFile(data)
-buildInterractiveTable(data)
+line  = buildInterractiveTable(data)
 
 
 

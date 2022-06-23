@@ -21,6 +21,7 @@ from sklearn.metrics import mean_squared_error
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 from st_aggrid import AgGrid,GridUpdateMode,JsCode
 # functions 
+#from pages.Modulbuild import saveColumns
 
 
 
@@ -46,20 +47,6 @@ def buildInterractiveTable(data):
     st.header("Selected Columns")
     st.dataframe(selected_rows)
 
-
-
-
-
-
-
-
-
-def saveModel(model,model_name):
-    # save the model to disk
-    path = 'C:/Users/quophi/Desktop/Main Folder/Projects/final project/ranslabs-project/'
-    
-    filename = path + model_name
-    pk.dump(model, open(f"{filename}.sav", 'wb'))
 
 
 
@@ -92,18 +79,15 @@ class Modelbuilding:
                     st.header('The Predicted plants are')
                     st.dataframe(predeicted_output)
                     st.write("The accuracy score is" , (accuracy_score(y_test,predeicted_output)*100))
-                    model_name = f'{columns[0]}-{columns[1]}-{columns[2]}-{columns[3]}-'
-                    if st.button('Save Model'):
-                        try:
-                            saveModel(model=clf,model_name=model_name)
-                            st.success('Model saved')
-                        except Exception as e:
-                            st.error('Error is saving model')
+                    
+                   
                     #st.write("The mean square error is" , (mean_squared_error(y_test,predeicted_output,multioutput='raw_values')))
+            
             except (RuntimeError, TypeError, NameError) as e:
                 st.error('Select your features or check your parameters')
                 st.write(e)
                 st.stop()
+        return clf
 
 
 
@@ -126,16 +110,10 @@ class Modelbuilding:
                     st.header('The Predicted plants are')
                     st.dataframe(predeicted_output)
                     st.write("The accuracy score is" , (accuracy_score(y_test,predeicted_output,normalize=False)*100))
-                    model_name = f'{columns[0]}-{columns[1]}-{columns[2]}-{columns[3]}-'
-                    if st.button('Save Model'):
-                        try:
-                            saveModel(model=clf,model_name=model_name)
-                            st.success('Model saved')
-                        except Exception as e:
-                            st.error('Error is saving model')
             except (RuntimeError, TypeError, NameError) as e:
                 st.warning("Select your features or check your parameters")
                 st.stop()
+        return clf
             
 
 
@@ -160,16 +138,10 @@ class Modelbuilding:
                     st.header('The Predicted plants are')
                     st.dataframe(predeicted_output)
                     st.write("The accuracy score is" , (accuracy_score(y_test,predeicted_output)*100))
-                    model_name = f'{columns[0]}-{columns[1]}-{columns[2]}-{columns[3]}-'
-                    if st.button('Save Model'):
-                        try:
-                            saveModel(model=clf,model_name=model_name)
-                            st.success('Model saved')
-                        except Exception as e:
-                            st.error('Error is saving model')
             except:
                 st.error('Select your features or check your parameters')
                 st.stop()
+        return clf
 
 
 
@@ -177,7 +149,7 @@ class Modelbuilding:
 
 
     def supportVectorMachine(features,labels,params,X_train,X_test,y_train,y_test):
-       with st.container():
+        with st.container():
             with st.form('svm '):
                 if st.form_submit_button('Submit Support Vector Parameters',help='Click this button to send your selected parameters to the model'):
                     st.success("Parameter Submitted Succesfully")
@@ -193,13 +165,7 @@ class Modelbuilding:
                     st.header('The Predicted plants are')
                     st.dataframe(predeicted_output)
                     st.write("The accuracy score is" , (accuracy_score(y_test,predeicted_output)*100))
-                    model_name = f'{columns[0]}-{columns[1]}-{columns[2]}-{columns[3]}-'
-                    if st.button('Save Model'):
-                        try:
-                            saveModel(model=clf,model_name=model_name)
-                            st.success('Model saved')
-                        except Exception as e:
-                            st.error('Error is saving model')
             except:
                 st.error('Select your features or check your parameters')
                 st.stop()
+        return clf

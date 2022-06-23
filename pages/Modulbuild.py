@@ -9,6 +9,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from PIL import Image
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+import pickle as pk
 
 #import functions
 from Components.functions import Modelbuilding
@@ -27,6 +28,39 @@ Config()
 
 Navbar()
 st.markdown("""<h1> Model Building Area </h1>""", unsafe_allow_html=True)
+
+
+
+
+
+
+def getColumnName(features_columns):
+    #cols = saveColumns()
+    cols = features_columns
+    name = ''
+    for i in range(len(cols)):
+        name = name + "." + cols[i] 
+    st.write(name)
+    return name
+
+    
+
+
+
+
+
+
+def saveModel(model,model_name):
+    # save the model to disk
+    path = 'C:/Users/quophi/Desktop/Main Folder/Projects/final project/ranslabs-project/'
+    
+    filename = path + model_name
+    pk.dump(model, open(f"{filename}.sav", 'wb'))
+
+
+
+
+
 
 try:
     
@@ -144,11 +178,8 @@ try:
         features_columns = st.multiselect("Select your festures for the model",data.columns,help='Select the columns you want to use as features')
         labels_columns = st.selectbox("Select your labels for the model",data.columns,help='Select the columns you want to use as labels')
     
-    def saveColumns():
-        return features_columns
-
     
-
+    name = getColumnName(features_columns)
 
     features = data[features_columns]
     labels = data[labels_columns]
@@ -156,31 +187,54 @@ try:
 
     if algorithm == "RandomForest":
         params = randomForest()
-        Modelbuilding.randomForestClassifier(features=features,labels=labels,params=params,
+        clf = Modelbuilding.randomForestClassifier(features=features,labels=labels,params=params,
                                             X_train=X_train,X_test=X_test,y_train=y_train,y_test=y_test)
-        
+        if st.button('Save Model'):
+            try:
+                saveModel(model=clf,model_name=name)
+                st.success('Model saved')
+            except Exception as e:
+                st.error(e)
 
 
     elif algorithm == "DecisionTree":
         params = decisionTree()       
-        Modelbuilding.decisionTreeClassifier(features=features,labels=labels,params=params,
+        clf = Modelbuilding.decisionTreeClassifier(features=features,labels=labels,params=params,
                                             X_train=X_train,X_test=X_test,y_train=y_train,y_test=y_test)
-
+        
+        if st.button('Save Model'):
+            try:
+                saveModel(model=clf,model_name=name)
+                st.success('Model saved')
+            except Exception as e:
+                st.error('Error is saving model')
 
 
 
     elif algorithm == "KNearestNeibhor":
         params = kNearestNeibhor()
-        Modelbuilding.knearstNeighborClassifier(features=features,labels=labels,params=params,
+        clf = Modelbuilding.knearstNeighborClassifier(features=features,labels=labels,params=params,
                                             X_train=X_train,X_test=X_test,y_train=y_train,y_test=y_test)
 
-
+        if st.button('Save Model'):
+            try:
+                saveModel(model=clf,model_name=name)
+                st.success('Model saved')
+            except Exception as e:
+                st.error('Error is saving model')
 
     elif algorithm == "SupportVectorMachine":
         params = supportVectorMachine()
-        Modelbuilding.supportVectorMachine(features=features,labels=labels,params=params,
+        clf = Modelbuilding.supportVectorMachine(features=features,labels=labels,params=params,
                                                 X_train=X_train,X_test=X_test,y_train=y_train,y_test=y_test)
 
+
+        if st.button('Save Model'):
+            try:
+                saveModel(model=clf,model_name=name)
+                st.success('Model saved')
+            except Exception as e:
+                st.error('Error is saving model')
 except (RuntimeError, TypeError, NameError) as e:
     st.stop()
    
