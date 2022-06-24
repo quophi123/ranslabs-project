@@ -41,11 +41,12 @@ def buildInterractiveTable(data):
     cel_mode = st.radio('Selection mode',options=['single','multiple'])
     gd.configure_selection(selection_mode=cel_mode,use_checkbox=True)
     gridoptions = gd.build()
-    gridtable = AgGrid(data,gridOptions=gridoptions,update_mode=GridUpdateMode.SELECTION_CHANGED,
+    gridtable = AgGrid(data,gridOptions=gridoptions,update_mode=GridUpdateMode.VALUE_CHANGED,
                     height=500,allow_unsafe_jscode=True,theme='fresh',allow_enterprice_modules = True)
     selected_rows = gridtable['selected_rows']
-    st.header("Selected Columns")
-    st.dataframe(selected_rows)
+    #st.header("Selected Columns")
+    #st.dataframe(selected_rows)
+    return gridtable
 
 
 

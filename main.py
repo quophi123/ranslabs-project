@@ -60,23 +60,23 @@ def file():
     #data = pd.to_csv(data)
     if data is not None:
         df = pd.read_csv(data)
-    else:
-        df = st.warning("Upload Data")
     return df
 
 
+try:
+    
 
-data = file()
+    data = file()
+    report = data.profile_report()
 
-report = data.profile_report()
+    st_profile_report(report,navbar=False)
+except Exception as e:
+    st.warning('Please Upload your data')
 
-st_profile_report(report,navbar=False)
+    from streamlit_ace import st_ace
 
+    # Spawn a new Ace editor
+    content = st_ace()
 
-from streamlit_ace import st_ace
-
-# Spawn a new Ace editor
-content = st_ace()
-
-# Display editor's content as you type
-content
+    # Display editor's content as you type
+    content

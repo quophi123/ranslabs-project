@@ -1,3 +1,4 @@
+from optparse import Values
 import pandas as pd
 from this import d
 import streamlit as st
@@ -32,7 +33,6 @@ def saveFile(data):
         s="/"
         
     g = directory +  s + file_name
-    st.write(g)
     output=data 
     if st.button("Submit"):
         try:
@@ -41,6 +41,36 @@ def saveFile(data):
             st.success('Saved Successfully')
         except Exception as e:
             st.write(e)
+
+
+
+
+
+#saving the csv file in directory
+def savegridFile(data):
+    
+    directory=os.getcwd()
+    file_name = 'newfile'
+    s = None
+    platform = sys.platform.startswith('win')
+    if platform == True:
+        s="\\"
+    else:
+        s="/"
+        
+    g = directory +  s + file_name
+    output=data 
+    if st.button("Submit"):
+        try:
+            # line = [line for line in open(path)]
+            output.to_csv(os.path.join(f'{g}.csv'),index=False,encoding='utf8')
+            st.success('Saved Successfully')
+        except Exception as e:
+            st.write(e)
+
+
+
+
 
 
 
@@ -65,11 +95,12 @@ def file():
 
 
 data = file()
-if st.checkbox('Submit for visualization'):
-    saveFile(data)
-line  = buildInterractiveTable(data)
 
 
+
+#newdata = pd.DataFrame.from_dict(line)
+
+#st.dataframe(newdata)
 
 
 try:
@@ -139,5 +170,23 @@ try:
         st.write(data)
 except:
     st.error("No Data Uploaded")
+
+
+
+file_tosave = st.selectbox('Choose the file to save visualization',('Submit Original file','Submit Edited file'))
+
+if file_tosave == 'Submit Original file':
+    st.markdown("<h3> Submiting original data",unsafe_allow_html=True) 
+    if st.checkbox('Submit for visualization'):
+        saveFile(data)
+elif file_tosave == 'Submit Edited file':
+    st.markdown("<h3> Edit your data in the frame below",unsafe_allow_html=True)
+    line  = buildInterractiveTable(data)
+    file = line.values()
+    file = list(file)
+    #next(file)
+    data = file[0]
+    if st.checkbox('Submit fo visualization'):
+        saveFile(data)
 
 
