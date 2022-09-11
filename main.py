@@ -1,11 +1,15 @@
 
 import streamlit as st
 import json
+
 import requests
 from streamlit_lottie import st_lottie
 import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
 import pandas as pd
+
+
+
 from Components.Navbar import Navbar;
 from Components.Config import Config;
 
@@ -73,3 +77,5 @@ with col3:
     quality='high',
     
     )
+
+

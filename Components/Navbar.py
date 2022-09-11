@@ -5,7 +5,7 @@ import streamlit as st
 def Navbar():
 
   st.markdown("""
-  <nav class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #041014;">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #800000;">
     <a class="navbar-brand" href="http://localhost:8501" target="_blank">Rans Labs</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -17,6 +17,9 @@ def Navbar():
         </li>
         <li class="nav-item">
           <a class="nav-link" href="http://localhost:8501/EDA" target="_self">EDA</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="http://localhost:8501/FeatureEngineering" target="_self">FeatureEngineering</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="http://localhost:8501/Visualization" target="_self">Visualization</a>

@@ -1,5 +1,6 @@
 from optparse import Values
 import pandas as pd
+import numpy as np
 from this import d
 import streamlit as st
 from csv import DictReader
@@ -15,6 +16,7 @@ from awesome_table import  AwesomeTable
 from Components.Navbar import Navbar;
 from Components.Config import Config;
 from Components.functions import buildInterractiveTable
+from Components.frame import filter_dataframe
 
 Config()
 Navbar()
@@ -106,13 +108,6 @@ def file():
 
 data = file()
 
-
-
-#newdata = pd.DataFrame.from_dict(line)
-
-#st.dataframe(newdata)
-
-
 try:
     menu = ['view data','size','shape','Check Datatypes','show columns','describe','mean','std','null', "count null","corr"]
     option = st.selectbox('Select EDA to perform',menu,help='select type of eda')
@@ -120,17 +115,21 @@ try:
     if  option == 'view data':
         view_type = st.selectbox('select view type',('by rows','by columns'))
         if view_type == 'by rows':
-            view_option = st.radio('select view type',('head','tail','preferred number'),horizontal=True)
+            with st.expander("Choose view options..."):
+                view_option = st.radio('select view type',('','head','tail','preferred number'),horizontal=True)
+            
             if view_option == 'head':
-                st.dataframe(data.head())
+                st.table(data.head())
             elif view_option == 'tail':
-                st.dataframe(data.tail())
-            else:
+                st.table(data.tail())
+            elif view_option == 'preferred number':
                 number = st.slider('slide to your preferred number',min_value=1,max_value=data.shape[0])
-                st.dataframe(data.head(number))
+                st.table(data.head(number))
+            else:
+                pass
         else:
             column_view = st.multiselect('showing data by columns',data.columns)
-            st.dataframe(data[column_view])
+            st.table(data[column_view])
 
     elif option == 'size':
         st.write(data.size)
@@ -140,7 +139,6 @@ try:
 
     elif option == 'describe':
        st.dataframe(data.describe())
-    #elif option == 'get data info':
 
     elif option == 'shape':
         st.write('dataset has `{}` columns and `{}` rows'.format(data.shape[0],data.shape[1]))
@@ -155,6 +153,7 @@ try:
             st.dataframe(frame.astype('str'))
         except Exception as e:
             st.write(e)
+            
     elif option == 'std':
         #claculating the standard deviation
         st.write("Showing `standard deviation` of various columns")
@@ -181,27 +180,52 @@ try:
         st.write(data)
 except:
     st.error("No Data Uploaded")
-try:
-    df = pd.DataFrame(data)
-    with st.expander('Expand to show items'):
-        AwesomeTable(df,show_order=True,show_search=True)
-except Exception as e:
-    st.stop()
+
+with st.expander('view all data'):
+    try:
+        df = pd.DataFrame(data)
+        table_type = st.selectbox('table_type',('table with scrol','table with no scrol'))
+        if table_type == 'table with scrol':
+            st.dataframe(filter_dataframe(df))
+        else:
+            st.table(filter_dataframe(df))
+        #AwesomeTable(df,show_order=True,show_search=True)
+    except Exception as e:
+        st.write(e)
 
 
-file_tosave = st.selectbox('Choose the file to save visualization',('Submit Original file','Submit Edited file'))
+file_tosave = st.selectbox('Choose the file to save for visualization',('Save Original file','Edited file'))
 
-if file_tosave == 'Submit Original file':
-    st.markdown("<h3> Submiting original data",unsafe_allow_html=True) 
+if file_tosave == 'Save Original file':
+    st.markdown("<h3> Submiting original data for visualization </h3>",unsafe_allow_html=True) 
     if st.button('Submit for visualization'):
         saveFile(data)
-elif file_tosave == 'Submit Edited file':
-    st.markdown("<h3> Edit your data in the frame below",unsafe_allow_html=True)
-    line  = buildInterractiveTable(data)
-    file = line.values()
-    file = list(file)
-    #next(file)
-    data = file[0]
+elif file_tosave == 'Edited file':
+    edit_type = st.radio('Edit Type',('Edit with new value','Drop Values','replace'),horizontal=True)
+    if edit_type == 'Edit with new value':
+        st.markdown("<h3> Edit your data in the frame below",unsafe_allow_html=True)
+        line  = buildInterractiveTable(data)
+        file = line.values()
+        file = list(file)
+        #next(file)
+        data = file[0]
+    elif edit_type == 'Drop Values':
+        data = data.dropna(axis=0)
+        st.write('Null value after droping')
+        st.write(data.isnull().sum()  )
+    else:
+        replace = st.selectbox('Select replace type',('mean','standard deviation','zeros'))
+        if replace == 'mean':
+            mean = data.mean()
+            st.write(mean)
+            data = data.fillna(value=mean,axis=0)
+        elif replace == 'standard deviation':
+            std = data.std()
+            st.write(std)
+            data = data.fillna(value=std,axis=0)
+        else:
+            data = data.fillna(value=0,axis=0)
+        st.dataframe(data)
     if st.button('Submit'):
         saveFile(data)
 
