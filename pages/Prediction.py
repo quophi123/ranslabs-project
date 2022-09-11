@@ -30,8 +30,8 @@ for i in os.listdir(g):
 
 
 
-
-v = st.selectbox('Select your model',available_models)
+with st.expander("Select Your Model From The available models"):
+    v = st.selectbox('Select your model',available_models)
 
 
 
@@ -66,10 +66,11 @@ try:
         if count >= len(name)-1:
             break
     enteries = list()
-    st.markdown("""<h4> Please Enter the values for the following collumns </h4>""", unsafe_allow_html=True)
-    for i in variables:
-        column = st.number_input(f" {i}")
-        enteries.append(column)
+    #st.markdown("""<h4> Please Enter the values for the following collumns </h4>""", unsafe_allow_html=True)
+    with st.expander("Enter the values for the following collumns"):
+        for i in variables:
+            column = st.number_input(f" {i}")
+            enteries.append(column)
 
     st.write(np.array(enteries).reshape(1,-1))
 except:
@@ -77,9 +78,12 @@ except:
 
 
 
+
+
 model = uploadModel()
-predeicted_output = model.predict(np.array(enteries).reshape(1,-1))
+
 if st.button('Predict'):
-    st.header('The Predicted plants is')
-    st.dataframe(predeicted_output)
+    predeicted_output = model.predict(np.array(enteries).reshape(1,-1))
+    st.write('The Predicted plant is')
+    st.header(predeicted_output)
     #st.write(type(model))

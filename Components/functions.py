@@ -124,7 +124,7 @@ class Modelbuilding:
 
     def knearstNeighborClassifier(features,labels,params,X_train,X_test,y_train,y_test):
         with st.container():
-            with st.form('knearest '):
+            with st.form('knearest'):
                 if st.form_submit_button('Submit Nearest Neighbor Parameters',help='Click this button to send your selected parameters to the model'):
                     st.success("Parameter Submitted Succesfully")
             try:

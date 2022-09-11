@@ -3,8 +3,13 @@ import pandas as pd
 from this import d
 import streamlit as st
 from csv import DictReader
+#import io
 import os
 import sys
+from awesome_table import  AwesomeTable
+
+
+
 
 #import app components
 from Components.Navbar import Navbar;
@@ -17,6 +22,12 @@ st.markdown("""<h1> EDA Area </h1>""", unsafe_allow_html=True)
 
 
 
+st.markdown('''
+        <style>
+        div.css-1a65djw.e1tzin5v0{border-color:red}
+        div.css-1a65djw{border-radius:5em}
+        </style>
+''',unsafe_allow_html=True)
 
 
 
@@ -34,13 +45,12 @@ def saveFile(data):
         
     g = directory +  s + file_name
     output=data 
-    if st.button("Submit"):
-        try:
-            # line = [line for line in open(path)]
-            output.to_csv(os.path.join(f'{g}.csv'),index=False,encoding='utf8')
-            st.success('Saved Successfully')
-        except Exception as e:
-            st.write(e)
+    try:
+        # line = [line for line in open(path)]
+        output.to_csv(os.path.join(f'{g}.csv'),index=False,encoding='utf8')
+        st.success('Saved Successfully')
+    except Exception as e:
+        st.write(e)
 
 
 
@@ -110,7 +120,7 @@ try:
     if  option == 'view data':
         view_type = st.selectbox('select view type',('by rows','by columns'))
         if view_type == 'by rows':
-            view_option = st.radio('select view type',('head','tail','preferred number'))
+            view_option = st.radio('select view type',('head','tail','preferred number'),horizontal=True)
             if view_option == 'head':
                 st.dataframe(data.head())
             elif view_option == 'tail':
@@ -130,6 +140,7 @@ try:
 
     elif option == 'describe':
        st.dataframe(data.describe())
+    #elif option == 'get data info':
 
     elif option == 'shape':
         st.write('dataset has `{}` columns and `{}` rows'.format(data.shape[0],data.shape[1]))
@@ -170,14 +181,19 @@ try:
         st.write(data)
 except:
     st.error("No Data Uploaded")
-
+try:
+    df = pd.DataFrame(data)
+    with st.expander('Expand to show items'):
+        AwesomeTable(df,show_order=True,show_search=True)
+except Exception as e:
+    st.stop()
 
 
 file_tosave = st.selectbox('Choose the file to save visualization',('Submit Original file','Submit Edited file'))
 
 if file_tosave == 'Submit Original file':
     st.markdown("<h3> Submiting original data",unsafe_allow_html=True) 
-    if st.checkbox('Submit for visualization'):
+    if st.button('Submit for visualization'):
         saveFile(data)
 elif file_tosave == 'Submit Edited file':
     st.markdown("<h3> Edit your data in the frame below",unsafe_allow_html=True)
@@ -186,7 +202,7 @@ elif file_tosave == 'Submit Edited file':
     file = list(file)
     #next(file)
     data = file[0]
-    if st.checkbox('Submit fo visualization'):
+    if st.button('Submit'):
         saveFile(data)
 
 

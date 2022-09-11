@@ -64,18 +64,20 @@ if option == ('Auto Generate Plots'):
 
 
 
-
+#charts = ['Line Chart','Pair Plots','Heat Map','Bar Chart','Box Plot']
 elif option == ('Custom Generate'):
         
     charts = ['Line Chart','Pair Plots','Heat Map','Bar Chart','Box Plot']
-    chart_type=st.radio('select your prefered algorithm',charts)
-    st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html = True)
+    #tab1,tab2,tab3,tab4,tab5 = st.tabs(charts)
+    chart_type=st.radio('select your prefered algorithm',charts,horizontal=True)
+    #st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html = True)
 
 
 
 
 
     if chart_type == 'Pair Plots':
+    #with tab1:
         st.markdown("""<h3> Pair Ploting </h3>""", unsafe_allow_html=True)
         if st.button('Generate Plot'):
             with st.spinner(text='Wait while we generate your chart....'):
@@ -84,6 +86,7 @@ elif option == ('Custom Generate'):
             fig = sns.pairplot(data, hue="species")
             st.pyplot(fig)
     elif chart_type == 'Line Chart':
+    #with tab2:
         st.markdown("""<h3> Line Chart </h3>""", unsafe_allow_html=True)
 
 
@@ -91,6 +94,7 @@ elif option == ('Custom Generate'):
 
 
     elif chart_type == 'Heat Map':
+    #with tab3:
         st.markdown("""<h3> Heat Map </h3>""", unsafe_allow_html=True)
         if st.button('Generate Plot'):
             with st.spinner(text='Wait while we generate your chart....'):
@@ -106,6 +110,7 @@ elif option == ('Custom Generate'):
 
 
     elif chart_type == 'Bar Chart':
+    #with tab4:
         st.markdown("""<h3> Bar Chart </h3>""", unsafe_allow_html=True)
 
 
@@ -115,6 +120,7 @@ elif option == ('Custom Generate'):
 
 
     elif chart_type == 'Box Plot':
+    #with tab5:
         st.markdown("""<h3> Box Plot </h3>""", unsafe_allow_html=True)
         c = st.multiselect('Select columns',data.columns)
         if st.button('Generate Plot'):

@@ -72,6 +72,11 @@ try:
     #models function
     def supportVectorMachine():
         with st.expander("Choose parameters"):
+            st.markdown(
+                """
+                        This section allows you to sselect your prefered parameter for the selected 
+                        algorithm, for building your model.""",unsafe_allow_html=True
+            )
             params = dict()
             C = st.slider("C",min_value=1,max_value=10)
             params.update({"C":C})
@@ -90,7 +95,12 @@ try:
             
 
     def randomForest():
-        with st.expander("Choose parameters"):  
+        with st.expander("Choose parameters"):
+            st.markdown(
+                """
+                        This section allows you to sselect your prefered parameter for the selected 
+                        algorithm, for building your model.""",unsafe_allow_html=True
+            )  
             params = dict()
             n_estimators = st.slider("Select Number of estimators",min_value=1,max_value=100)
             params.update({"n_estimators":n_estimators})
@@ -110,6 +120,11 @@ try:
 
     def decisionTree():
         with st.expander("Choose parameters"):
+            st.markdown(
+                """
+                        This section allows you to sselect your prefered parameter for the selected 
+                        algorithm, for building your model.""",unsafe_allow_html=True
+            )
             params = dict()
             splitter = st.radio("splitter",('best','random'))
             st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html = True)
@@ -133,6 +148,11 @@ try:
 
     def kNearestNeibhor():
         with st.expander("Choose parameters"):
+            st.markdown(
+                """
+                        This section allows you to sselect your prefered parameter for the selected 
+                        algorithm, for building your model.""",unsafe_allow_html=True
+            )
             params = dict()
             n_neighbors = st.slider("n_neighbors",min_value=3,max_value=10)
             params.update({"n_neighbors":n_neighbors})
@@ -175,8 +195,13 @@ try:
     test_size = st.slider('Select the size of your test data',(10.0/100),(50.0/100),step=.05)
 
     with st.expander("Select Your Features and Labels"):
-        features_columns = st.multiselect("Select your festures for the model",data.columns,help='Select the columns you want to use as features')
-        labels_columns = st.selectbox("Select your labels for the model",data.columns,help='Select the columns you want to use as labels')
+        st.markdown(
+                """
+             Features are the independent variables for building your model and the
+             Targets are the dependent variable, ie the variables to be predicted """,unsafe_allow_html=True
+            )
+        features_columns = st.multiselect("Select your Features Columns",data.columns,help='Select the columns you want to use as features')
+        labels_columns = st.selectbox("Select your labels/Targets Columns",data.columns,help='Select the columns you want to use as labels')
     
     
     name = getColumnName(features_columns)
