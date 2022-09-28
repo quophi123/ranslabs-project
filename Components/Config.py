@@ -6,7 +6,13 @@ from PIL import Image
 
 def Config():
     logo = Image.open('assets/logo.jpg')
-    st.set_page_config(page_title="ml automate", page_icon=logo, layout="wide", initial_sidebar_state="collapsed")
+    st.set_page_config(page_title="ml automate", page_icon=logo, layout="wide", initial_sidebar_state="collapsed",
+                       menu_items={
+    'Get Help': 'https://www.extremelycoolapp.com/help',
+    'Report a bug': "https://www.extremelycoolapp.com/bug",
+    'About': "# This is a header. This is an *extremely* cool app!"
+                       }
+                       )
     hide_menu_style = """
             <style>
             #MainMenu {visibility: hidden;}

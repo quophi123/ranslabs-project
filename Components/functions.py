@@ -74,8 +74,8 @@ class Modelbuilding:
                 min_samples_leaf=params['min_samples_leaf'],max_features=params['max_features'],random_state=params['random_state'])
                 clf = rdm.fit(X_train,y_train)
                 predicted_output = clf.predict(X_test)
-                st.header('The Predicted plants are')
-                #st.dataframe(predicted_output)
+                
+               
                 st.write("The accuracy score is" , accuracy_score(y_test,predicted_output)*100,"%")
                 #st.write ('The mean square error is' , mean_squared_error(y_predict,predicted_output))
 
@@ -94,8 +94,6 @@ class Modelbuilding:
                 if st.form_submit_button('Submit Decision Tree Parameters',help='Click this button to send your selected parameters to the model'):
                     st.success("Parameter Submitted Succesfully")
             try:
-                #if st.checkbox("Build"):
-                    #st.dataframe(params)
                 with st.spinner(text='Wait while your model is been buid...'):
                     time.sleep(4)
                 st.success('Done')
@@ -103,8 +101,6 @@ class Modelbuilding:
                 min_samples_leaf=params['min_samples_leaf'],max_features=params['max_features'],random_state=params['random_state'],max_leaf_nodes=params['max_leaf_nodes'])
                 clf = dtc.fit(X_train,y_train)
                 predicted_output = clf.predict(X_test)
-                st.header('The Predicted plants are')
-                #st.dataframe(predicted_output)
                 st.write("The accuracy score is" , accuracy_score(y_test,predicted_output)*100,"%")
         
             except (RuntimeError, TypeError, NameError) as e:
@@ -121,16 +117,12 @@ class Modelbuilding:
                 if st.form_submit_button('Submit Nearest Neighbor Parameters',help='Click this button to send your selected parameters to the model'):
                     st.success("Parameter Submitted Succesfully")
             try:
-                #if st.checkbox("Build"):
-                    #st.write(params)
                 with st.spinner(text='Wait while your model is been buid...'):
                     time.sleep(0.5)
                 st.success('Done')
                 knn = KNeighborsClassifier(n_neighbors=params['n_neighbors'],weights=params['weights'],algorithm=params['algorithm'],leaf_size=params['leaf_size'])
                 clf = knn.fit(X_train,y_train)
                 predicted_output = clf.predict(X_test)
-                st.header('The Predicted plants are')
-                #st.dataframe(predicted_output)
                 st.write("The accuracy score is" , accuracy_score(y_test,predicted_output)*100,"%")
         
             except:
@@ -149,15 +141,13 @@ class Modelbuilding:
                 if st.form_submit_button('Submit Support Vector Parameters',help='Click this button to send your selected parameters to the model'):
                     st.success("Parameter Submitted Succesfully")
             try:
-                #if st.checkbox("Build"):
-                    #st.write(params)
+                
                 with st.spinner(text='Wait while your model is been buid...'):
                     time.sleep(0.5)
                 st.success('Done')
                 svm = SVC(C=params['C'],kernel=params['kernel'],gamma=params['gamma'],verbose=params['verbose'],random_state=params['random_state'])
                 clf = svm.fit(X_train,y_train)
                 predicted_output = clf.predict(X_test)
-                st.header('The Predicted plants are')
                 #st.dataframe(predicted_output)
                 st.write("The accuracy score is" , accuracy_score(y_test,predicted_output)*100,"%")
         

@@ -6,7 +6,7 @@ def Navbar():
 
   st.markdown("""
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #800000;">
-    <a class="navbar-brand" href="http://localhost:8501" target="_blank">Rans Labs</a>
+    <a class="navbar-brand" href="http://localhost:8501" target="_self">Rans Labs</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

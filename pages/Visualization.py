@@ -63,9 +63,8 @@ if option == ('Auto Generate Plots'):
         st.success('Done') 
         st_profile_report(report,navbar=False)
 
-
-        report = sv.analyze(data)
-        report.show_html('Report.html')
+        #report = sv.analyze(data)
+        #report.show_html('Report.html')
 
 
 #charts = ['Line Chart','Pair Plots','Heat Map','Bar Chart','Box Plot']
